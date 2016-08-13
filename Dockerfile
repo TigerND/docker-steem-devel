@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-FROM teego/steem-base:0.3-Ubuntu-trusty
+FROM teego/steem-base:0.3-Debian-jessie
 
 MAINTAINER Aleksandr Zykov <tiger@mano.email>
 
