@@ -18,7 +18,6 @@ RUN echo "Development requirements" &&\
             libicu-dev \
             build-essential \
             libbz2-dev \
-            libssl-dev \
             libncurses5-dev \
             doxygen \
             libreadline-dev \
@@ -27,6 +26,27 @@ RUN echo "Development requirements" &&\
     ) && \
     apt-get clean -qy
 
+ENV OPENSSL_VERSION 1.0.2h
+
+RUN figlet "OpenSSL" &&\
+    ( \
+        cd $BUILDROOT; \
+        wget -O openssl-$OPENSSL_VERSION.tar.gz \
+            https://www.openssl.org/source/openssl-$OPENSSL_VERSION.tar.gz &&\
+        tar xfz openssl-$OPENSSL_VERSION.tar.gz &&\
+        ( \
+            cd openssl-$OPENSSL_VERSION; \
+            ( \
+                ( \
+                    ./config no-asm --openssldir="/usr" \
+                ) &&\
+                make depend &&\
+                make &&\
+                make install \
+            ) \
+        ) \
+    )
+    
 ENV BOOST_VERSION 1.60.0
 
 RUN echo "Boost library" &&\
