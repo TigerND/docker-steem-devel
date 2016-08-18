@@ -10,7 +10,6 @@ RUN echo "Development requirements" &&\
     ( \
         apt-get install -qy --no-install-recommends \
             git \
-            cmake \
             g++ \
             python3 \
             python3-dev \
@@ -22,9 +21,20 @@ RUN echo "Development requirements" &&\
             doxygen \
             libreadline-dev \
             dh-autoreconf \
+            python2.7 \
             python2.7-dev \
     ) && \
     apt-get clean -qy
+
+RUN ( \
+        cd $BUILDROOT &&\
+        wget http://www.cmake.org/files/v3.2/cmake-3.2.2.tar.gz &&\
+        tar xf cmake-3.2.2.tar.gz &&\
+        cd cmake-3.2.2 &&\
+        ./configure &&\
+        make &&\
+        make install \
+    )
 
 ENV OPENSSL_VERSION 1.0.2h
 
